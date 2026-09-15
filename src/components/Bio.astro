@@ -46,14 +46,107 @@
    </figure>
    
    <figure class="hand-box shake-hands">
-    <img src="./images/shakehand1.png" alt="shake hand" >
-    <figcaption class="meet">nice to meet you(✯◡✯)</figcaption>
+    <img class="hand-img" src="./images/shakehand1.png" alt="shake hand" >
+    <figcaption class="meet-txt">nice to meet you(✯◡✯)</figcaption>
 
    </figure>
     
 
 </div><!--wellcom-->
  </section><!--class-bio -->
+
+ <script>
+    import { gsap } from "gsap";
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const letters = gsap.utils.toArray('.rotate-letter');
+        const arrow = document.querySelector('.puppy-arrow');
+        const yourHand =document.querySelector('.your-hand');
+        const myHand = document.querySelector('.my-hand');
+        const shakeHands = document.querySelector('.hand-img');
+        const meetText = document.querySelector('.meet-txt');
+        let clickCount = 0;
+
+        gsap.set(arrow, { display: "inline-block", transformOrigin: "top center" });
+        gsap.set([shakeHands,meetText],{opacity:0});
+        // GSAP animates from these starting values TO their natural CSS state
+        gsap.from(letters, {
+            rotation: -25,
+            duration: 0.5,
+            ease: "back.out(1.7)",
+            stagger: 0.02
+        });
+        // Create the infinite bounce loop
+        // gsap.to(arrow, {
+        //     scale: 1.05,            // Grow to 1.4 times its size
+           
+        //     duration: 0.5,         // How long one loop takes
+        //     ease: "eas.inOut",  // Smooth acceleration/deceleration
+        //     yoyo: true,            // Goes forward, then reverses back to start
+        //     repeat: -1             // Repeats infinitely
+        // });
+
+        const handShakeTl =gsap.timeline({paused:true,
+            onComplete: () => {
+        // Automatically reverse the timeline back to the start when it finishes
+        handShakeTl.reverse();
+    }
+        });
+        handShakeTl.to(['.start-shaking',arrow],{opacity:0,duration:0.05},0);
+        handShakeTl.to(yourHand,{
+            xPercent: -220, // Handles percentage-based translateX
+            yPercent: 120,  // Handles percentage-based translateY
+            rotation:-15,  // Handles rotation in degrees
+            scale: 0.5,    // Handles scaling
+            duration:0.7,
+            ease:"power1.in"
+        },0);
+        handShakeTl.to(myHand,{
+            xPercent: 220, // Handles percentage-based translateX
+            yPercent: 120,  // Handles percentage-based translateY
+            rotation: -15,  // Handles rotation in degrees
+            scale: 0.5 ,    // Handles scaling
+            duration:0.7,
+            ease:"power1.in"
+        },0)
+       
+        handShakeTl.to([myHand,yourHand],{opacity:0,duration:0.3})
+        handShakeTl.to([shakeHands,meetText],{opacity:1,duration:0.75},'<');
+        handShakeTl.to(shakeHands,{
+            y:-20,
+            // yoyo:true,
+            // repeat:1.5,
+            duration:.3,
+            ease:"power1.in"
+        },'<')
+     // Click handler that triggers the animation if it's currently at the start
+       const triggerHandShake = () => {
+            if (handShakeTl.progress() === 0) {
+                handShakeTl.play();
+
+                // Increment click count and update text based on state
+                clickCount++;
+
+                if (meetText) {
+                    if (clickCount === 1) {
+                        meetText.textContent = "nice to meet you";
+                    } else if (clickCount === 2) {
+                        meetText.textContent = "what's up friend (o^▽^o)";
+                    } else if (clickCount === 3) {
+                        // Use innerHTML here so the <a> tag renders correctly as a link
+                        meetText.innerHTML = "wanna talk more <a href='#'>click here</a>";
+                        
+                        // Reset count back to 0 so the next click loops back to the start
+                        clickCount = 0;
+                    }
+                }
+            }
+        };
+
+    yourHand?.addEventListener('click', triggerHandShake);
+    myHand?.addEventListener('click', triggerHandShake);
+    });
+</script>
 
 <style>
     .bio{
@@ -66,6 +159,10 @@
         gap: 2rem;
         margin: auto;
     }
+    .rotate-letter {
+    display: inline-block;
+    margin-right: 2px;
+    color: #FF8C28;}
     .wellcom{
         position: relative;
         height: 300px;
