@@ -14,80 +14,17 @@ import  Footer  from "../components/Footer.astro";
 		<title>Astro Basics</title>
 	</head>
 	<body>
-		 <div class="page-wrapper">
-			<div class="page-overlay" tabindex="-1"></div>
-		 <div class="page">
+		 <!-- <div class="page-wrapper"> -->
+			<!-- <div class="page-overlay" tabindex="-1"></div> -->
+		 <!-- <div class="page"> -->
 			<Header/>
 			<main>
 				<slot />
 			</main>
 			<Footer/>
 			
-		</div><!--page -->
-	</div> <!--page-wrappper -->
+		<!--</div>page -->
+	<!--</div> page-wrappper -->
 	</body>
 </html>
 
-<script>
-    import { gsap } from "gsap";
-    import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-    gsap.registerPlugin(ScrollTrigger);
-
-    document.addEventListener("DOMContentLoaded", () => {
-        const page = document.querySelector('.page') as HTMLElement;
-        const pageOverlay = document.querySelector('.page-overlay') as HTMLElement;
-        const menuToggler = document.querySelector('.toggle-nav');
-        const menu = document.querySelector('.nav-container') as HTMLElement;
-
-        // Set initial states
-        gsap.set(pageOverlay, { opacity: 0, pointerEvents: 'none' });
-		 gsap.set(menu, {
-                rotate: -10,
-                x: -120,
-                y: -110,
-     
-        
-            })
-        // Create the timeline (paused by default so we can toggle it)
-        const menuTl = gsap.timeline({ paused: true });
-
-        menuTl
-            // 1. Animate page rotation and translation
-			
-            .to([page,pageOverlay], {
-                rotate: 10,
-                x: 100,
-                y: 110,
-                duration: 0.6,
-                ease: "power2.inOut"
-            }) // The '0' aligns all animations to start at the same time
-            
-            // 2. Animate menu with opposite transforms (-10deg, -100px, -110px)
-            // 3. Fade in the overlay and enable pointer events
-            .to(pageOverlay, {
-                opacity: 1,
-                pointerEvents: 'auto',
-                duration: 0.6,
-                ease: "power2.inOut"
-            }, 0);
-
-        // Toggle animation on click
-        if (menuToggler) {
-            menuToggler.addEventListener('click', () => {
-                if (menuTl.reversed() || menuTl.progress() === 0) {
-                    menuTl.play();
-                } else {
-                    menuTl.reverse();
-                }
-            });
-        }
-
-        // Optional: Clicking the overlay closes the menu
-        if (pageOverlay) {
-            pageOverlay.addEventListener('click', () => {
-                menuTl.reverse();
-            });
-        }
-    });
-</script>

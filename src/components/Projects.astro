@@ -7,24 +7,111 @@ const allProjects = await getCollection('projects');
 ---
 
   <section class="projcets">
-        <h1>My Projects</h1>
+    <section class="section-header">
+      <h1>My Projects</h1>
         
+    </section>
+
+       
         <div class="projects-grid">
             {allProjects.map((project) => (
                 <article class="project-card">
-                    {project.data.image && (
-                    <Image 
-                        src={project.data.image} 
-                        alt={project.data.title} 
-                        width={400} 
-                        height={225} 
-                    />
+                    <div class="card-contents">
+                        {project.data.image && (
+                        <figure class="card-img">
+                            <Image 
+                            src={project.data.image} 
+                            alt={project.data.title} 
+                            width={400} 
+                            height={225} 
+                            />
+                        </figure> 
                 )}
-                    <h2>{project.data.title}</h2>
-                    <p>{project.data.summary}</p>
+                    <div class="card-data">
+                        <h2>{project.data.title}</h2>
+                        <p>{project.data.summary}</p>
+                    </div>
+                   
                     {/* Route to the dynamic slug page */}
                     <a href={`/projects/${project.id}`}>View Project &rarr;</a>
+                   
+                    </div>
                 </article>
             ))}
         </div>
 </section>
+<script>
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+document.addEventListener("DOMContentLoaded", () => {
+    const cards = gsap.utils.toArray('.project-card');
+    
+    cards.forEach((card) => {
+        const contents = card.querySelector('.card-contents');
+
+        // 1. Set initial states
+        gsap.set(card, { rotate: -10, transformOrigin: "center center" });
+        gsap.set(contents, { rotate: 10, scale: 1.2, transformOrigin: "center center" });
+
+        // 2. Create an independent timeline for each card tied to its own position
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: card,          // <-- The individual card triggers it
+                start: "top 85%",       // When the top of the card hits 85% down the viewport
+                end: "top 30%",         // When the top of the card hits 30% up the viewport
+                scrub: 1,               // Smooth scrub effect tied to scroll
+                markers: true,          // Visible markers pointing right at the specific card
+            }
+        });
+
+        // 3. Add the animations to the card's timeline
+        tl.to(card, { rotate: 0, ease: "power2.out" })
+          .to(contents,
+           { rotate: 0,
+             scale: 1, 
+            ease: "power2.out" }, 0);
+    });
+});
+</script>
+<style>
+    .projects-grid{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 3rem;
+        padding:3rem 1rem;
+        align-items: center;
+        justify-content: center;
+       
+    }
+    .card-contents{
+        /* transform: rotate(10deg) scale(1.2); */
+        position: absolute;
+        inset: 0;
+    }
+    .project-card{
+         /* transform: rotate(-10deg); */
+        overflow: hidden;
+        border-radius: 24px;
+        position: relative;
+        width:20rem;
+        aspect-ratio: 3/2;
+    }
+    .card-img{
+        position: absolute;
+        inset: 0;
+    }
+    .card-img img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .card-data{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    }
+</style>

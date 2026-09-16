@@ -1,6 +1,6 @@
 ---
 ---
-<header>
+<header class="site-header">
     <nav class="nav">
         <a href="/" class="logo">
         <svg version="1.1" id="logo-icon" xmlns="http://www.w3.org/2000/svg"
@@ -8,7 +8,7 @@
             viewBox="0 0 450 450" xml:space="preserve">
             <g class="face">
                 <path id="start-curve" fill="#fff" stroke-width="2" d="M59.62,335.79c-31.64-20.85-45.78-54.82-45.78-93.46v-0.15c0-38.49,14.14-72.02,45.78-93.31l4.37,5.1
-                   c-21.72,18.08-33.82,51.9-33.82,88.35c0,36.6,12.54,70.71,33.82,88.65L59.62,335.79z" />
+                    c-21.72,18.08-33.82,51.9-33.82,88.35c0,36.6,12.54,70.71,33.82,88.65L59.62,335.79z" />
                 <path id="smile-eye" fill="#fff" stroke-width="2"
                     d="M166.04,255.17l-32.95-73.04L100,255.17H87.46l40.97-87.48h10.06l40.97,87.48H166.04z" />
                 <path id="mouth" fill="#fff" stroke-width="2"
@@ -32,6 +32,7 @@
                 <line x1="25" y1="65" x2="75" y2="65" id="line-3"></line></g>
                 </svg>
             </button>
+         <div class="nav-overlay" tabindex="-1"></div>
         <div class="nav-container">
             <ul class="nav-items">
                 <li><a href="about">about</a></li>
@@ -40,19 +41,108 @@
                 <li><a href="contact">contact</a></li>
             </ul>
         </div>
-        
     </nav>
 </header>
 
+<script>
+import { gsap } from "gsap";
 
+document.addEventListener("DOMContentLoaded", () => {
+    const toggleBtn = document.querySelector(".toggle-nav");
+    const overlay = document.querySelector(".nav-overlay");
+    const container = document.querySelector(".nav-container");
+    const navLinks = document.querySelectorAll(".nav-items a");
+
+    // 1. Initial hidden state with a fun, dramatic tilt and small scale
+    gsap.set(overlay, { autoAlpha: 0, pointerEvents: "none" });
+    gsap.set(container, { 
+        autoAlpha: 0, 
+        scale: 0.5, 
+        xPercent: -50, 
+        yPercent: -50, 
+        rotation: -25, // Starts tilted further for a playful spin-in
+        pointerEvents: "none" 
+    });
+
+    // 2. Playful bounce timeline
+    const navTl = gsap.timeline({ paused: true });
+
+    navTl.to(overlay, {
+        autoAlpha: 1,
+        pointerEvents: "auto",
+        duration: 0.3,
+        ease: "power2.out"
+    })
+    .to(container, {
+        autoAlpha: 1,
+        scale: 1,
+        rotation: 0, // Spins smoothly back to flat 0 degrees
+        pointerEvents: "auto",
+        duration: 1,
+        ease: "elastic.out(1, 0.4)" // Adds a fun, springy wobble effect!
+    }, 0);
+
+    let isOpen = false;
+
+    const toggleNav = () => {
+        isOpen = !isOpen;
+        if (isOpen) {
+            navTl.play();
+        } else {
+            navTl.reverse();
+        }
+    };
+
+    toggleBtn?.addEventListener("click", toggleNav);
+    overlay?.addEventListener("click", toggleNav);
+
+    navLinks.forEach(link => {
+        link.addEventListener("click", () => {
+            if (isOpen) {
+                toggleNav();
+            }
+        });
+    });
+});
+</script>
 <style>
-  .nav{
-    --toggler-size:4rem;
-    height:var(--toggler-size);
-    padding-inline: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    .site-header{
+        position: relative;
+    z-index: 10;
+    box-shadow: 1px 1px 10px;
+    }
+    .nav-container{
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        z-index: 20;
+        width: min(500px, 80vw);
+        height: 70vh;
+        border-radius: 24px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--background-secondary);
+        text-align: center;
+    }
+    .nav-items{
+        position: relative;
+        /* transform: rotate(10deg); */
+    }
+    .nav-overlay{
+        position: fixed;
+        inset: 0;
+        z-index: 10;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+    .nav{
+        --toggler-size: 4rem;
+        height: var(--toggler-size);
+        padding-inline: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
     .logo{
         height: 100%;
@@ -60,10 +150,12 @@
     .logo svg{
         height: 100%;
     }
-  
     .toggle-nav{
         height: 100%;
-        width:var(--toggler-size);
+        width: var(--toggler-size);
+        background: transparent;
+        border: none;
+        cursor: pointer;
     }
     .toggle-nav svg{
         height: 100%;

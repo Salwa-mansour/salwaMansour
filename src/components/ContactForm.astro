@@ -1,0 +1,62 @@
+---
+---
+<section class="contact-section">
+   
+    <form action="#" class="contact-form">
+        <input type="email" name="" id="" placeholder="your email">
+        <textarea name="message" cols="30" rows="10" id="" placeholder="your message"></textarea>
+        <button type="submit">send</button>
+    </form>
+</section>
+
+<style>
+    .contact-form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        width: 80%;
+    }
+    .contact-section{
+        padding: 1rem 2rem;
+        flex: 0 0 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .contact-form input,
+    .contact-form textarea{
+        width: 100%;
+    background: #0000008f;
+    outline: none;
+    border: 2px solid #ffffffa6;
+    border-radius: 24px;
+    padding: 1rem;
+    color: white;
+    
+    }
+    .contact-form button{
+      
+    height: 3.5em;
+    width: 7em;
+  
+    border: none;
+    border-top: 3px solid #FF8C28;
+    border-radius: 0 0 0.2em 0.2em;
+    border-radius: 24px;
+    /* -webkit-transform-origin: 50% 5em;
+    -ms-transform-origin: 50% 5em;
+    transform-origin: 50% 5em; */
+  background: rgba(0, 0, 0, 0.8);
+    color: #d1deea;
+    line-height: 1;
+    }
+     @media (max-width:770px) {
+       
+        .contact-section{
+        flex: 0 0 100%;
+    }
+       
+    }
+</style>
