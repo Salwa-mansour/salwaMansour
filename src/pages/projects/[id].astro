@@ -1,0 +1,36 @@
+---
+import { getCollection, render } from 'astro:content';
+
+// 1. Generate static paths for every project file
+export async function getStaticPaths() {
+    const projects = await getCollection('projects');
+    return projects.map((project) => ({
+        params: { id: project.id },
+        props: { project },
+    }));
+}
+
+// 2. Grab the project passed from getStaticPaths
+const { project } = Astro.props;
+import { Image } from 'astro:assets';
+// 3. Render the MDX content into HTML components
+const { Content } = await render(project)
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout>
+        <article>
+              {project.data.image && (
+                    <Image 
+                        src={project.data.image} 
+                        alt={project.data.title} 
+                        width={400} 
+                        height={225} 
+                    />
+                )}
+            <h1>{project.data.title}</h1>
+            <p class="date">{project.data.date}</p>
+            
+            <!-- Render the actual MDX body content here -->
+            <Content />
+        </article>
+</Layout>

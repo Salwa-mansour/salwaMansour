@@ -1,0 +1,30 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+// Fetch all project MDX files
+const allProjects = await getCollection('projects');
+
+---
+
+  <section class="projcets">
+        <h1>My Projects</h1>
+        
+        <div class="projects-grid">
+            {allProjects.map((project) => (
+                <article class="project-card">
+                    {project.data.image && (
+                    <Image 
+                        src={project.data.image} 
+                        alt={project.data.title} 
+                        width={400} 
+                        height={225} 
+                    />
+                )}
+                    <h2>{project.data.title}</h2>
+                    <p>{project.data.summary}</p>
+                    {/* Route to the dynamic slug page */}
+                    <a href={`/projects/${project.id}`}>View Project &rarr;</a>
+                </article>
+            ))}
+        </div>
+</section>
