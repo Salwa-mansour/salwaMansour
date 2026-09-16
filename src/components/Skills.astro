@@ -36,39 +36,70 @@
     </div>
 <div class="icons">
     <div class="item-icon">
-          <object type="image/svg+xml" data="./images/React.svg" >
+          <object type="image/svg+xml" data="./images/HTML5.svg" >
+        <!-- Fallback content if the browser doesn't support SVG/object -->
+            html5
+        </object>
+    </div>
+  
+    <div class="item-icon">
+          <object type="image/svg+xml" data="./images/CSS3.svg" >
+        <!-- Fallback content if the browser doesn't support SVG/object -->
+            css3
+        </object>
+    </div>
+    <div class="item-icon">
+          <object type="image/svg+xml" data="./images/Git.svg" >
+        <!-- Fallback content if the browser doesn't support SVG/object -->
+            Git
+        </object>
+    </div>
+    <div class="item-icon">
+          <object type="image/svg+xml" data="./images/JavaScript.svg" >
+        <!-- Fallback content if the browser doesn't support SVG/object -->
+           javascript
+        </object>
+    </div>
+    <div class="item-icon">
+          <object type="image/svg+xml" data="./images/Node.js.svg" >
+        <!-- Fallback content if the browser doesn't support SVG/object -->
+           node
+        </object>
+    </div>
+    <div class="item-icon">
+          <object type="image/svg+xml" data="./images/Express.svg" >
         <!-- Fallback content if the browser doesn't support SVG/object -->
             Your browser does not support SVG
         </object>
     </div>
-  
     <div class="item-icon">
           <object type="image/svg+xml" data="./images/React.svg" >
         <!-- Fallback content if the browser doesn't support SVG/object -->
             Your browser does not support SVG
         </object>
     </div>
+    <div class="item-icon">
+          <object type="image/svg+xml" data="./images/Astro.svg" >
+        <!-- Fallback content if the browser doesn't support SVG/object -->
+            astro
+        </object>
+    </div>
   
     <div class="item-icon">
-          <object type="image/svg+xml" data="./images/React.svg" >
+          <object type="image/svg+xml" data="./images/Sanity.svg" >
         <!-- Fallback content if the browser doesn't support SVG/object -->
             Your browser does not support SVG
         </object>
     </div>
   
     <div class="item-icon">
-          <object type="image/svg+xml" data="./images/React.svg" >
+          <object type="image/svg+xml" data="./images/gsap.svg" >
         <!-- Fallback content if the browser doesn't support SVG/object -->
             Your browser does not support SVG
         </object>
     </div>
   
-    <div class="item-icon">
-          <object type="image/svg+xml" data="./images/React.svg" >
-        <!-- Fallback content if the browser doesn't support SVG/object -->
-            Your browser does not support SVG
-        </object>
-    </div>
+
   
    
 
@@ -79,6 +110,7 @@
     <li>html</li>
     <li>css</li>
     <li>javascrt</li>
+    <li>git</li>
     <li>responsiv design</li>
     <li>node.js</li>
     <li>express</li>
@@ -91,66 +123,94 @@
 
 <script>
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-
+gsap.registerPlugin(ScrollTrigger);
 
 document.addEventListener("DOMContentLoaded", () => {
     const icons = gsap.utils.toArray('.item-icon');
     const boxContainer = document.querySelector('.box-container');
+    const toolkitList = document.querySelector('.toolkit-list');
     
     // Set initial transform origins and starting states
-  
     gsap.set('.box-cover', { transformOrigin: "25% 20%" });
     gsap.set(icons, { opacity: 0, scale: 0, x: 0, y: 0 });
+    gsap.set(toolkitList, { opacity: 0 });
 
     const toolkitTl = gsap.timeline({
-        paused: true,
-        onComplete: () => {
-            // Once the open animation finishes, start the finite floating effect
-            icons.forEach(icon => {
-                gsap.to(icon, {
-                    x: "+=random(-50, 50)",
-                    y: "+=random(-50, 50)",
-                    rotation: "random(-12, 12)",
-                    duration: "random(2, 4)",
-                    ease: "sine.inOut",
-                    yoyo: true,
-                    repeat: 3 // Repeats back-and-forth 10 times then stops
-                });
-            });
-        }
+        paused: true
     });
 
-    // 1. Rotate container
-    toolkitTl.to('.box-container', { rotate: -90, duration: 0.5, ease: "power2.inOut" }, 0);
+    // 1. Rotate container & box cover simultaneously (Open)
+    toolkitTl.to('.box-container', { rotate: -90, duration: 0.5, ease: "power2.inOut" }, 0)
+              .to('.box-cover', { rotate: -90, duration: 0.5, ease: "back.out(2)" }, 0);
 
-    // 2. Rotate box cover simultaneously
-    toolkitTl.to('.box-cover', { rotate: -90, duration: 0.5, ease: "back.out(2)" }, 0);
-
-    // 3. Scatter icons
+    // 2. Scatter icons out from the box
     toolkitTl.to(icons, {
-        x: () => gsap.utils.random(-100, 100),
-        y: () => gsap.utils.random(-100, 100),
-        scale: () => gsap.utils.random(0.8, 1.3),
+        x: () => gsap.utils.random(-800, -300),
+        y: () => gsap.utils.random(-250, 0),
+        scale: () => gsap.utils.random(0.75, 1.2),
         opacity: 1,
         duration: 1,
         stagger: 0.05,
         ease: "power2.out"
     }, "-=0.3");
 
-    // Toggle play/reverse on click
+    // 3. Icons yoyo/floating animation
+    toolkitTl.to(icons, {
+        x: "+=random(-50, 50)",
+        y: "+=random(-30, 30)",
+        rotation: "random(-15, 15)",
+        duration: 1.5,
+         yoyo: true,
+         repeat:1.5, 
+        ease: "sine.inOut",
+        stagger: 0.05
+    });
+
+    // 4. Reset icons back to initial state (shrinking and returning to 0,0)
+    toolkitTl.to(icons, {
+        x: 0,
+        y: 0,
+        scale: 0,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.03,
+        ease: "power2.in"
+    });
+
+    // 5. Rotate box and cover back to 0 (Close the box)
+    toolkitTl.to('.box-container', { rotate: 0, duration: 0.5, ease: "power2.inOut" }, "-=0.5")
+              .to('.box-cover', { rotate: 0, duration: 0.5, ease: "power2.inOut" }, "-=0.5");
+
+    // 6. Trigger the toolkit list opacity fade-in last
+    toolkitTl.to(toolkitList, {
+        opacity: 1,
+        duration: 0.6,
+        ease: "power2.out"
+    },'<-=1');
+
+    // ScrollTrigger to play/restart the animation cleanly on scroll
+    ScrollTrigger.create({
+        trigger: ".skills",
+        start: "top 75%",
+        markers: true,
+        onEnter: () =>{
+            if(toolkitTl.isActive()) return;
+            toolkitTl.restart();
+        },
+        onEnterBack: () => {
+            if(toolkitTl.isActive()) return;
+            toolkitTl.restart();},
+    });
+
+    // Optional manual click trigger
     boxContainer?.addEventListener('click', () => {
-        if (toolkitTl.progress() === 0) {
-            toolkitTl.play();
-        } else {
-            // Kill any active floating tweens before reversing so they slide back smoothly
-            icons.forEach(icon => gsap.killTweensOf(icon));
-            toolkitTl.reverse();
-        }
+        if (toolkitTl.isActive()) return;
+        toolkitTl.restart();
     });
 });
 </script>
-
 <style>
     .skills-container{
        position: relative;
@@ -200,10 +260,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     .item-icon{
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 30px;
-      height: 30px;
+      bottom: 0;
+      right: 50%;
+      width: 40px;
+      height: 40px;
     }
     .item-icon svg{
         width: 100%;
