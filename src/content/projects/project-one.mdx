@@ -5,6 +5,9 @@ date: "2026-07-15"
 image: "./images/destcast.png"
 ---
 
+import { Image } from 'astro:assets';
+import coverImage from './images/destcast.png';
+
 # Project Details
 
 Here you can write your full project write-up, paragraphs, and lists. 
@@ -14,3 +17,7 @@ Here you can write your full project write-up, paragraphs, and lists.
 
 ### Want to add images inside the content?
 You can just import Astro's `<Image />` component right inside your MDX file if you want inline images!
+
+Here is the cover image rendered directly inside the content:
+
+<Image src={coverImage} alt="SimpleBuy E-commerce preview" width={800} />

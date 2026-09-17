@@ -1,6 +1,6 @@
 ---
 ---
-<section class="skills">
+<section id="skills"  class="skills">
     <div class="section-header">
         <h1>my toolkit</h1>
     </div>
@@ -217,7 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         const mobileTl = gsap.timeline({ paused: true });
         mobileTl.to('.box-container', { rotate: -180, duration: 0.5, ease: "power2.inOut" }, 0)
-                .to('.box-cover', { rotate: -5, yPercent: -700, duration: 0.5, ease: "power2.inOut" })
+                .to('.box-cover', { rotate: -5, yPercent: -500, duration: 0.5, ease: "power2.inOut" })
                 .to('.box-cover', { rotate: 0, duration: 0.25, ease: "power2.inOut" },'>-=0.1')
                  .to(icons, {
                      x: () => gsap.utils.random(300, 0),
@@ -258,7 +258,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const st = ScrollTrigger.create({
             trigger: ".skills",
             start: "top 85%",
-            onEnter: () => mobileTl.play()
+             onEnter: () => {
+                if (mobileTl.isActive()) return;
+                mobileTl.restart();
+            },
+            onEnterBack: () => {
+                if (mobileTl.isActive()) return;
+                mobileTl.restart();
+            },
         });
     // Optional manual click trigger
     boxContainer?.addEventListener('click', () => {
@@ -329,6 +336,7 @@ document.addEventListener("DOMContentLoaded", () => {
       right: 50%;
       width: 40px;
       height: 40px;
+      opacity: 0;
     }
     .item-icon svg{
         width: 100%;

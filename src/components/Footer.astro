@@ -9,20 +9,20 @@ import  ContactForm  from "./ContactForm.astro";
          <h1>contact me now</h1>
      </div>
          <ul class="contact-list">
-            <li><a href="">
-                <object type="image/svg+xml" data="./images/GitHub.svg" >
+            <li class="github" ><a href="https://github.com/Salwa-mansour">
+                <object type="image/svg+xml" data="/images/GitHub.svg" >
                 <!-- Fallback content if the browser doesn't support SVG/object -->
                     GitHub
                 </object>
             </a></li>
-            <li><a href="">
-                <object type="image/svg+xml" data="./images/Reddit.svg" >
+            <li class="reddit" ><a href="#">
+                <object type="image/svg+xml" data="/images/Reddit.svg" >
                 <!-- Fallback content if the browser doesn't support SVG/object -->
                     GitHub
                 </object>
             </a></li>
-            <li><a href="">
-                <object type="image/svg+xml" data="./images/LinkedIn.svg" >
+            <li class="linkedin" ><a href="#">
+                <object type="image/svg+xml" data="/images/LinkedIn.svg" >
                     <!-- <path fill="#0076b2" d="M116 3H12a8.91 8.91 0 00-9 8.8v104.42a8.91 8.91 0 009 8.78h104a8.93 8.93 0 009-8.81V11.77A8.93 8.93 0 00116 3z"/> -->
                 <!-- Fallback content if the browser doesn't support SVG/object -->
                     Git
@@ -31,7 +31,9 @@ import  ContactForm  from "./ContactForm.astro";
          </ul>
    </section>
    <ContactForm/>
-   <div class="copy-rights">copy write resceved {Date.now()}</div>
+   <div class="copy-rights">
+    <small>&copy; {new Date().getFullYear()} Salwa Mansour. All rights reserved.</small>
+    </div>
 </footer>
 
 <style>
@@ -65,18 +67,30 @@ import  ContactForm  from "./ContactForm.astro";
     .contact-list li{
         width: 50px;
         height: 50px;
+        border-radius: 10%;
+        overflow: hidden;
     }
     .contact-list li a{
         display: block;
         width: 100%;
         height: 100%;
-       
+       padding: .2rem;
+    }
+    .github{
+        background-color: black;
+    }
+    .reddit{
+        background-color: red;
+    }
+    .linkedin{
+        background-color:#0076b2 ;
     }
     .contact-list object{
         width: 100%;
         height: 100%;
         object-fit: contain;
     }
+    
       @media (max-width:770px) {
          .footer section{
         flex: 0 0 100%;

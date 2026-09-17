@@ -1,5 +1,5 @@
 *{
-  outline: 1px solid salmon;
+
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -80,9 +80,16 @@ footer{
     padding: 1rem;
     display: block;
     color: var(--background-color);
+    font-size: 1.5rem;
+    font-weight: 500;
 }
 .toggle-nav{
     background-color: transparent;
     outline: 0;
     border: 0;
 }
+ .project-page{
+        width: min(800px,90vw);
+        margin: auto;
+        padding: 1rem;
+    }

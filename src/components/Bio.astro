@@ -1,6 +1,6 @@
 ---
 ---
-<section class="bio">
+<section id="bio" class="bio">
 
 
    <div  class="site-branding">
@@ -70,7 +70,7 @@
         let clickCount = 0;
 
         gsap.set(arrow, { display: "inline-block", transformOrigin: "top center" });
-        gsap.set([shakeHands,meetText],{opacity:0});
+        
         // GSAP animates from these starting values TO their natural CSS state
         gsap.from(letters, {
             rotation: -25,
@@ -118,7 +118,7 @@
             y:-20,
             // yoyo:true,
             // repeat:1.5,
-            duration:.3,
+            duration:.5,
             ease:"power1.in"
         },'<')
      // Click handler that triggers the animation if it's currently at the start
@@ -136,7 +136,7 @@
                         meetText.textContent = "what's up friend (o^▽^o)";
                     } else if (clickCount === 3) {
                         // Use innerHTML here so the <a> tag renders correctly as a link
-                        meetText.innerHTML = "wanna talk more <a href='#'>click here</a>";
+                        meetText.innerHTML = "wanna talk more <a href='#contact-form'>click here</a>";
                         
                         // Reset count back to 0 so the next click loops back to the start
                         clickCount = 0;
@@ -214,6 +214,13 @@
         left: -50%;
         transform: rotate(-25deg) translateX(-50%)
     }
+    .meet-txt :global(a),
+    .meet-txt a {
+        display: inline-block;
+        padding: .2rem;
+        color: var(--secondary-font-color);
+        font-weight: 400;
+    }
     .puppy-arrow{
         font-family: system;
     font-style: normal;
@@ -235,6 +242,11 @@
         flex-direction: column;
         gap: 1rem;
         align-items: center;
+        
+    }
+    .hand-img,
+    .meet-txt{
+        opacity: 0;
     }
     @media (max-width:770px) {
       .site-branding{

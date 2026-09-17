@@ -6,7 +6,7 @@ const allProjects = await getCollection('projects');
 
 ---
 
-  <section class="projcets">
+  <section id="works" class="projcets">
     <section class="section-header">
       <h1>My Projects</h1>
         
@@ -33,7 +33,7 @@ const allProjects = await getCollection('projects');
                     </div>
                    
                     {/* Route to the dynamic slug page */}
-                    <a href={`/projects/${project.id}`}>View Project &rarr;</a>
+                    <a href={`/projects/${project.id}`} class="project-link" title="View Project"> </a>
                    
                     </div>
                 </article>
@@ -119,5 +119,11 @@ document.addEventListener("DOMContentLoaded", () => {
     .card-data h3{
         font-size: 1rem;
         font-weight: 300;
+    }
+    .project-link{
+        position: absolute;
+        inset: 0;
+        z-index: 10;
+      
     }
 </style>

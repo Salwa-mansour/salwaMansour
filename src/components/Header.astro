@@ -35,10 +35,10 @@
          <div class="nav-overlay" tabindex="-1"></div>
         <div class="nav-container">
             <ul class="nav-items">
-                <li><a href="about">about</a></li>
-                <li><a href="works">works</a></li>
-                <li><a href="skills">skills</a></li>
-                <li><a href="contact">contact</a></li>
+                <li><a href="\#bio">about</a></li>
+                <li><a href="\#works">works</a></li>
+                <li><a href="\#skills">skills</a></li>
+                <li><a href="\#contact-form">contact</a></li>
             </ul>
         </div>
     </nav>
@@ -126,6 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
         justify-content: center;
         background-color: var(--background-secondary);
         text-align: center;
+        opacity: 0;
     }
     .nav-items{
         position: relative;
@@ -136,6 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
         inset: 0;
         z-index: 10;
         background-color: rgba(0, 0, 0, 0.4);
+        opacity: 0;
     }
     .nav{
         --toggler-size: 4rem;
