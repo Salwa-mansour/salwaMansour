@@ -2,8 +2,11 @@
 ---
 <section class="contact-section">
    
-    <form action="#" id="contact-form" class="contact-form">
-        <input type="email" name="" id="" placeholder="your email">
+    <form action="#" name="contact" method="POST" data-netlify="true" id="contact-form" class="contact-form">
+         <!-- Required hidden input for Netlify forms -->
+       <input type="hidden" name="form-name" value="contact" />
+       
+        <input type="email" name="email" id="" placeholder="your email">
         <textarea name="message" cols="30" rows="10" id="" placeholder="your message"></textarea>
         <button type="submit">send</button>
     </form>
