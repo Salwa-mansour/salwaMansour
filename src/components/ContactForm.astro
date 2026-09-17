@@ -2,16 +2,41 @@
 ---
 <section class="contact-section">
    
-    <form action="#" name="contact" method="POST" data-netlify="true" id="contact-form" class="contact-form">
+  <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="contact-form">
          <!-- Required hidden input for Netlify forms -->
        <input type="hidden" name="form-name" value="contact" />
-       
+       <!-- Honeypot spam protection field (hidden from real users via CSS if desired) -->
+    <p style="display: none;">
+        <label>Don’t fill this out if you're human: <input name="bot-field" /></label>
+    </p>
+
         <input type="email" name="email" id="" placeholder="your email">
         <textarea name="message" cols="30" rows="10" id="" placeholder="your message"></textarea>
         <button type="submit">send</button>
     </form>
 </section>
+<script>
+    const form = document.querySelector('.contact-form') as HTMLFormElement;
 
+    form?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const formData = new FormData(form);
+
+        try {
+            await fetch('/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams(formData as any).toString()
+            });
+
+            alert('Message sent successfully!');
+            form.reset();
+        } catch (error) {
+            alert('Form submission failed. Please try again.');
+        }
+    });
+</script>
 <style>
     .contact-form{
         display: flex;
