@@ -266,6 +266,22 @@ document.addEventListener("DOMContentLoaded", () => {
         height: 100%;
         object-fit: contain;
     }
+    .toolkit-list {
+        list-style: initial;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* Creates two equal columns */
+        gap: 1rem; /* Adds nice spacing between the items */
+        list-style: none; /* Removes default bullet points if you want a cleaner look */
+        padding: 0;
+    }
+
+    .toolkit-list li {
+   
+        padding: 0.75rem 1rem;
+      
+      text-transform: capitalize;
+        font-weight: 500;
+    }
      @media (max-width:770px) {
        
         .skills{
