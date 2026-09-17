@@ -21,7 +21,7 @@
             <span class="rotate-letter">l</span>
             <span class="rotate-letter">w</span>
             <span class="rotate-letter">a</span>
-            <span>(＾▽＾);</span>
+            <span class="kao-moji" >(＾▽＾);</span>
         </h1>
 
     </div>
@@ -40,8 +40,10 @@
          <img src="./images/myhand.png" alt="my hand" >
     </figure>
    <figure class="hand-box your-hand">
-      <figcaption class="start-shaking">click the hand</figcaption>
-       <span class="puppy-arrow">&#8595;</span>
+      <figcaption class="start-shaking">click the hand
+          <span class="puppy-arrow">↓</span>
+      </figcaption>
+       
       <img src="./images/yourhand.png" alt="your hand" >
    </figure>
    
@@ -78,7 +80,7 @@
         });
         // Create the infinite bounce loop
         // gsap.to(arrow, {
-        //     scale: 1.05,            // Grow to 1.4 times its size
+        //     scaleX: 1.5,            // Grow to 1.4 times its size
            
         //     duration: 0.5,         // How long one loop takes
         //     ease: "eas.inOut",  // Smooth acceleration/deceleration
@@ -149,6 +151,9 @@
 </script>
 
 <style>
+    .dev-name{
+        margin-bottom: 2rem;
+    }
     .bio{
         display: flex;
         justify-content: space-around;
@@ -156,21 +161,26 @@
         align-items: center;
         max-width: 900px;
         min-height: 500px;
-        padding-inline: 1rem;
+       
         gap: 2rem;
         margin: auto;
     }
     .rotate-letter {
     display: inline-block;
     margin-right: 2px;
-    color: #FF8C28;}
+    color: #FF8C28;
+    }
+    .kao-moji{
+        font-size: 1rem;
+        white-space: nowrap;
+    }
     .wellcom{
         position: relative;
         height: 300px;
         flex: 0 0 50%;
     }
     .site-branding,
-    .wellcom{
+        {
         flex: 0 0 50%;
     }
     .wellcom .hand-box{
@@ -202,16 +212,20 @@
         position: absolute;
         top: -50%;
         left: -50%;
+        transform: rotate(-25deg) translateX(-50%)
     }
     .puppy-arrow{
+        font-family: system;
+    font-style: normal;
         position: absolute;
         display: inline-block;
         padding: .2rem;
-        right: -10%;
+       
         top: -80%;
         font-size: 2rem;
+        font-weight: 700;
         color: orange;
-        transform: rotate(22deg);
+        /* transform: rotate(22deg); */
     }
     .shake-hands{
         bottom: 20px;
@@ -223,7 +237,9 @@
         align-items: center;
     }
     @media (max-width:770px) {
-      
+      .site-branding{
+        text-align: center;
+      }
         .bio{
             flex-wrap: wrap;
         }

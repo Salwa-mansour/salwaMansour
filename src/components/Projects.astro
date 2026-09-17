@@ -28,8 +28,8 @@ const allProjects = await getCollection('projects');
                         </figure> 
                 )}
                     <div class="card-data">
-                        <h2>{project.data.title}</h2>
-                        <p>{project.data.summary}</p>
+                        <h3>{project.data.title}</h3>
+                       
                     </div>
                    
                     {/* Route to the dynamic slug page */}
@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
         display: flex;
         flex-wrap: wrap;
         gap: 3rem;
-        padding:3rem 1rem;
+     
         align-items: center;
         justify-content: center;
        
@@ -111,7 +111,13 @@ document.addEventListener("DOMContentLoaded", () => {
     .card-data{
         position: absolute;
         top: 50%;
-        left: 50%;
-        transform: translate(-50%,-50%);
+        transform: translate(0, -50%);
+        width: 100%;
+        padding-inline: 1rem;
+        text-align: center;
+    }
+    .card-data h3{
+        font-size: 1rem;
+        font-weight: 300;
     }
 </style>

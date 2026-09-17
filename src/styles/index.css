@@ -1,5 +1,5 @@
 *{
-  
+  outline: 1px solid salmon;
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -17,11 +17,23 @@ a{
     text-decoration: none;
     display: inline-block;
 }
+html{
+     font-size: 18px;
+}
 body{
     background-color: var(--background-color);
-    
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 300;
+    line-height: 1.5;
+    font-size: 18px;
     color: var(--main-font-color);
   
+}
+h1,h2,h3,h4,h5,h6{
+    /* font-family: 'Roboto', sans-serif; */
+}
+section{
+       padding: 1.5rem;
 }
 .page-wrapper{
     position: relative;

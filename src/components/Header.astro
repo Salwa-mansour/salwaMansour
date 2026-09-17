@@ -55,6 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 1. Initial hidden state with a fun, dramatic tilt and small scale
     gsap.set(overlay, { autoAlpha: 0, pointerEvents: "none" });
+    gsap.set('.nav-items',{rotate:10})
     gsap.set(container, { 
         autoAlpha: 0, 
         scale: 0.5, 
@@ -76,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .to(container, {
         autoAlpha: 1,
         scale: 1,
-        rotation: 0, // Spins smoothly back to flat 0 degrees
+        rotation: -10, // Spins smoothly back to flat 0 degrees
         pointerEvents: "auto",
         duration: 1,
         ease: "elastic.out(1, 0.4)" // Adds a fun, springy wobble effect!
@@ -109,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .site-header{
         position: relative;
     z-index: 10;
-    box-shadow: 1px 1px 10px;
+        box-shadow: -3px 2px 9px 4px #0000001c;
     }
     .nav-container{
         position: fixed;
