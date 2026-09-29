@@ -96,7 +96,7 @@ footer{
     }
 @media (max-width:770px){
     h1,h2,h3,h4,h5,h6{
-        outline: 1px solid red;
+      
         font-size:calc(.7rem + 2vw) ;
     }
 }
