@@ -1,39 +1,71 @@
----
----
 <section class="contact-section">
-   
-  <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="contact-form">
-         <!-- Required hidden input for Netlify forms -->
-       <input type="hidden" name="form-name" value="contact" />
-       <!-- Honeypot spam protection field (hidden from real users via CSS if desired) -->
-    <p style="display: none;">
-        <label>Don’t fill this out if you're human: <input name="bot-field" /></label>
-    </p>
+  <!-- 1. Change method to POST and add the Web3Forms action endpoint -->
+  <form action="https://api.web3forms.com/submit" method="POST" class="contact-form">
+    
+    <!-- 2. Replace with your actual Web3Forms Access Key -->
+    <input type="hidden" name="access_key" value="37a91849-bc6f-4053-a2d0-8be59063cafb">
 
-        <input type="email" name="email" id="" placeholder="your email">
-        <textarea name="message" cols="30" rows="10" id="" placeholder="your message"></textarea>
-        <button type="submit">send</button>
-    </form>
+    <!-- Optional: Subject line for the email you receive -->
+    <input type="hidden" name="subject" value="New Message from Your Portfolio Contact Form">
+
+    <!-- Optional: Honeypot spam protection for Web3Forms -->
+    <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+
+    <input type="email" name="email" required placeholder="your email">
+    <textarea name="message" cols="30" rows="10" required placeholder="your message"></textarea>
+    
+    <button type="submit">send</button>
+    <!-- This is where the feedback text will appear -->
+    <p class="messeage"></p>
+  </form>
 </section>
+
 <script>
     const form = document.querySelector('.contact-form') as HTMLFormElement;
+    const responseMessage = form?.querySelector('.messeage') as HTMLParagraphElement;
 
     form?.addEventListener('submit', async (e) => {
         e.preventDefault();
         
+        // Optional: Let the user know it's working
+        if (responseMessage) {
+            responseMessage.textContent = "Sending...";
+            responseMessage.style.color = "inherit";
+        }
+
         const formData = new FormData(form);
+        const object = Object.fromEntries(formData);
+        const json = JSON.stringify(object);
 
         try {
-            await fetch('/', {
+            const response = await fetch('https://api.web3forms.com/submit', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: new URLSearchParams(formData as any).toString()
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: json
             });
 
-            alert('Message sent successfully!');
-            form.reset();
+            const result = await response.json();
+            
+            if (result.success) {
+                if (responseMessage) {
+                    responseMessage.textContent = 'Message sent successfully!';
+                    responseMessage.style.color = 'green'; // Optional: style success
+                }
+                form.reset();
+            } else {
+                if (responseMessage) {
+                    responseMessage.textContent = result.message || 'Form submission failed. Please try again.';
+                    responseMessage.style.color = 'red'; // Optional: style error
+                }
+            }
         } catch (error) {
-            alert('Form submission failed. Please try again.');
+            if (responseMessage) {
+                responseMessage.textContent = 'Something went wrong. Please check your connection and try again.';
+                responseMessage.style.color = 'red';
+            }
         }
     });
 </script>
