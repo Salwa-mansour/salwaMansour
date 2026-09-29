@@ -193,7 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const st = ScrollTrigger.create({
             trigger: ".skills",
             start: "top center",
-             markers:true,
+           
             onEnter: () => {
                 if (desktopTl.isActive()) return;
                 desktopTl.restart();
@@ -266,8 +266,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const st = ScrollTrigger.create({
             trigger: ".skills",
-            start: "top center",
-           
+            start: "center bottom",
+             markers:true,
              onEnter: () => {
                 if (mobileTl.isActive()) return;
                 mobileTl.restart();
