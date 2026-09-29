@@ -17,7 +17,7 @@ import { Image } from 'astro:assets';
 const { Content } = await render(project)
 import Layout from '../../layouts/Layout.astro';
 ---
-<Layout className={'project-page'} title={project.data.title}>
+<Layout className={'project-page'} title={project.data.title} description={project.data.summary} image={project.data.image?.src}>
         <article>
            
 
