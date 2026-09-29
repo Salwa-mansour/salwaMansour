@@ -6,21 +6,22 @@
    <div  class="site-branding">
     <div id="name-conainer">
         <h1 class="dev-name">
-    
-            <span class="rotate-letter">W</span>
-            <span class="rotate-letter">e</span>
-            <span class="rotate-letter">l</span>
-            <span class="rotate-letter">l</span>
-            <span class="rotate-letter">c</span>
-            <span class="rotate-letter">o</span>
-            <span class="rotate-letter">m</span>,
-            <span class="rotate-letter">I&#039;</span>
-            <span class="rotate-letter">m</span>
-            <span class="rotate-letter">S</span>
-            <span class="rotate-letter">a</span>
-            <span class="rotate-letter">l</span>
-            <span class="rotate-letter">w</span>
-            <span class="rotate-letter">a</span>
+        
+                    <span class="rotate-letter">W</span>
+                    <span class="rotate-letter">e</span>
+                    <span class="rotate-letter">l</span>
+                    <span class="rotate-letter">l</span>
+                    <span class="rotate-letter">c</span>
+                    <span class="rotate-letter">o</span>
+                    <span class="rotate-letter">m</span>,
+                    <span class="rotate-letter">I&#039;</span>
+                    <span class="rotate-letter">m</span>
+                    <span class="rotate-letter">S</span>
+                    <span class="rotate-letter">a</span>
+                    <span class="rotate-letter">l</span>
+                    <span class="rotate-letter">w</span>
+                    <span class="rotate-letter">a</span>
+               
             <span class="kao-moji" >(＾▽＾);</span>
         </h1>
 
@@ -87,40 +88,62 @@
         //     yoyo: true,            // Goes forward, then reverses back to start
         //     repeat: -1             // Repeats infinitely
         // });
-
-        const handShakeTl =gsap.timeline({paused:true,
-            onComplete: () => {
-        // Automatically reverse the timeline back to the start when it finishes
+// Create a reusable timeline outside matchMedia so you can control it (play/reverse) anywhere
+const handShakeTl = gsap.timeline({
+    paused: true,
+    onComplete: () => {
         handShakeTl.reverse();
     }
-        });
-        handShakeTl.to(['.start-shaking',arrow],{opacity:0,duration:0.05},0);
-        handShakeTl.to(yourHand,{
-            xPercent: -220, // Handles percentage-based translateX
-            yPercent: 120,  // Handles percentage-based translateY
-            rotation:-15,  // Handles rotation in degrees
-            scale: 0.5,    // Handles scaling
-            duration:0.7,
-            ease:"power1.in"
-        },0);
-        handShakeTl.to(myHand,{
-            xPercent: 220, // Handles percentage-based translateX
-            yPercent: 120,  // Handles percentage-based translateY
-            rotation: -15,  // Handles rotation in degrees
-            scale: 0.5 ,    // Handles scaling
-            duration:0.7,
-            ease:"power1.in"
-        },0)
-       
-        handShakeTl.to([myHand,yourHand],{opacity:0,duration:0.3})
-        handShakeTl.to([shakeHands,meetText],{opacity:1,duration:0.75},'<');
-        handShakeTl.to(shakeHands,{
-            y:-20,
-            // yoyo:true,
-            // repeat:1.5,
-            duration:.5,
-            ease:"power1.in"
-        },'<')
+});
+
+// Setup matchMedia for responsiveness
+let mm = gsap.matchMedia();
+
+mm.add({
+    // Define your breakpoints
+    isMobile: "(max-width: 476px)",
+    isDesktop: "(min-width: 477px)"
+}, (context) => {
+    let { isMobile } = context.conditions;
+    console.log(`ismoble ${isMobile}`)
+    // Define your dynamic values for mobile vs desktop
+    // (Feel free to tweak these numbers to fit your small screen layout)
+    const targetX = isMobile ? 180 : 220;
+    const targetY =  120;
+
+    // Clear previous tweens when media query condition changes/resizes
+    handShakeTl.clear();
+
+    // Re-build the timeline tweens with the correct variables
+    handShakeTl.to(['.start-shaking', arrow], { opacity: 0, duration: 0.05 }, 0);
+    
+    handShakeTl.to(yourHand, {
+        xPercent: -targetX,
+        yPercent: targetY,
+        rotation: -15,
+        scale: 0.5,
+        duration: 0.7,
+        ease: "power1.in"
+    }, 0);
+
+    handShakeTl.to(myHand, {
+        xPercent: targetX,
+        yPercent: targetY,
+        rotation: -15,
+        scale: 0.5,
+        duration: 0.7,
+        ease: "power1.in"
+    }, 0);
+
+    handShakeTl.to([myHand, yourHand], { opacity: 0, duration: 0.3 });
+    handShakeTl.to([shakeHands, meetText], { opacity: 1, duration: 0.75 }, '<');
+    
+    handShakeTl.to(shakeHands, {
+        y: -20,
+        duration: 0.5,
+        ease: "power1.in"
+    }, '<');
+});
      // Click handler that triggers the animation if it's currently at the start
        const triggerHandShake = () => {
             if (handShakeTl.progress() === 0) {
@@ -153,6 +176,8 @@
 <style>
     .dev-name{
         margin-bottom: 2rem;
+      
+        
     }
     .bio{
         display: flex;
@@ -165,6 +190,7 @@
         gap: 2rem;
         margin: auto;
     }
+   
     .rotate-letter {
     display: inline-block;
     margin-right: 2px;
