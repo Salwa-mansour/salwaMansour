@@ -1,0 +1,54 @@
+---
+title: "SimpleBuy E-commerce App"
+summary: "A full-stack e-commerce platform built with Node, React, and PayPal integration."
+date: "2026-07-15"
+image: "https://placehold.co/600x400"
+url: "https://simple-buy-xt4o.vercel.app/"
+---
+
+> **[🚀 Live Demo: Check out SimpleBuy here](https://simple-buy-xt4o.vercel.app/)**
+
+## Engineering Case Study: Secure Payment Orchestration & Package Dimension Architecture in a MERN E-Commerce Engine
+
+### 1. Executive Summary & System Overview
+Building a resilient full-stack e-commerce engine requires strict adherence to **Separation of Concerns (SoC)**, particularly when crossing boundaries between user authentication, decoupled client applications, third-party payment gateways, and carrier rate calculation logistics.
+
+This case study breaks down the architectural choices, transaction security pipelines, and logistical hurdles solved during the development of a production-ready MERN stack web application. Specifically, it examines how the backend safely orchestrates asynchronous payment capture sequences and resolves physical packing constraints like dimensional weight and package size splits.
+
+---
+
+### 2. Architectural Blueprint & Separation of Concerns
+To prevent tight coupling between HTTP routing, business services, and database persistence, the backend architecture strictly isolates responsibilities across three core layers:
+
+* **Controller Layer:** Handles HTTP request contracts, extracts authenticated user context, validates input payloads, and returns uniform JSON status responses.
+* **Service / Transaction Layer:** Encapsulates state-changing workflows such as creating orders, interacting with external APIs, and handling order fulfillment logic.
+* **Data Model Layer:** Enforces domain invariants at the database level, including unique indices, embedded single-address rules, and mandatory pricing snapshots.
+
+---
+
+### 3. Secure Payment Orchestration & Transaction Sequencing
+A critical failure mode in e-commerce applications is trusting client-submitted prices or marking an order as paid before money actually changes hands. To guarantee zero-trust payment processing, the system splits checkout into a strict multi-step cryptographic handshake between the frontend, the server, and the payment gateway.
+
+**Key Security Implementations:**
+* **Server-Side Price Validation:** The client submits cart item identifiers and quantities, but the server re-queries database prices or snapshots them safely. It never trusts client-side pricing totals.
+* **Idempotent State Management:** Orders are only persisted to the database after the payment gateway returns a successful completed status, mapping the transaction reference to prevent duplicate fulfillments.
+
+---
+
+### 4. Logistics Challenge: Package Size, Weight, and Shipping Calculation
+Integrating third-party shipping APIs exposed a classic e-commerce engineering challenge: how to calculate accurate box rates and label dimensions when a user cart contains items of varying physical dimensions, weights, and fragile classifications.
+
+#### The Problem: Multi-Item Dimensional Distortion
+If an application blindly bundles all cart items into a single hardcoded package size, major failures occur, including volumetric weight penalties from oversized boxes or carrier adjustment fees due to box volume overflow.
+
+#### The Solution: Modular Packing & Dimensional Profiling Algorithm
+To solve this, product schemas were expanded to include physical attributes like weight, length, width, height, and fragility flags. 
+
+The backend shipping service evaluates cart contents dynamically before querying carrier rates. By calculating cumulative stacking heights, maximum footprint lengths and widths, and aggregate weight metrics, the application generates precise shipping specifications that match real-world warehouse packing constraints without relying on hardcoded assumptions.
+
+---
+
+### 5. Lessons Learned & Best Practices
+* **Decoupled SDK States:** Relying on global providers at the root layout level while handling asynchronous loading flags completely eliminates white-screen crashes caused by script delays.
+* **Single-Address Architecture:** Restricting user profiles to a single embedded address object rather than a complex array simplifies state synchronization across checkout forms and reduces database query complexity.
+* **Separation in Payments:** Keeping API call orchestration inside backend controller-service boundaries guarantees that network failures with payment gateways never corrupt user cart states prematurely.

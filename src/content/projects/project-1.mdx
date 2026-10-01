@@ -1,0 +1,52 @@
+---
+title: "mini social media website"
+summary: "A full-stack social media platform built with Node, React and Postgres"
+date: "2026-07-15"
+image: "https://placehold.co/600x400"
+url: "https://go-social-chi.vercel.app/"
+---
+
+> **[🚀 Live Demo: Check out Go-Social here](https://go-social-chi.vercel.app/)**
+
+### 📱 Overview
+
+A full-stack social networking web application designed with a focus on high-performance rendering, clean UX, and real-time interaction. The platform allows users to share thoughts, follow peers, manage connection requests, engage through comments and likes, and explore dynamic user profile feeds.
+
+### 🎯 Problem Statement & Objectives
+
+Modern social media platforms often suffer from feature bloat, sluggish interfaces, and complex state management. The objective of this project was to engineer a **lightning-fast, minimalist social experience** that demonstrates mastery over modern full-stack architecture, relational database design, and real-time state synchronization.
+
+### 🛠️ Tech Stack & Architecture
+
+* **Frontend:** React, React Router, Axios (with custom private interceptors), CSS Modules / Custom Styling.
+* **Backend:** Node.js, Express.js.
+* **Database & ORM:** PostgreSQL  managed via **Prisma ORM**.
+* **Real-time Engine:** Socket.io for event-driven UI updates.
+* **Authentication:** JWT-based secure authentication with refresh token rotation and bcrypt password hashing.
+
+---
+
+### 🚀 Key Features & Technical Challenges Solved
+
+#### 1. Optimized Relational Data Fetching (Prisma)
+
+* **The Challenge:** Fetching a user profile required aggregating profile metadata, timeline posts, author details, like status indicators, and incoming/outgoing follow requests without triggering N+1 query bottlenecks.
+* **The Solution:** Leveraged Prisma’s relational query capabilities (`select`, `include`, and custom relation filters) to map complex relational graphs into clean, structured JSON payloads (`{ user, posts }`) in single, high-performance database transactions.
+
+#### 2. Optimistic UI Updates for Social Interactions
+
+* **The Challenge:** Eliminating perceived network latency when users click "Like" or toggle follow states.
+* **The Solution:** Implemented client-side **optimistic rendering**. Interface components instantly update local state elements and metrics counters before the network request completes, falling back or syncing gracefully upon server response.
+
+#### 3. Component Modularization & Scalable State Design
+
+* **The Challenge:** Preventing prop drilling and bloated parent components across complex feed and profile views.
+* **The Solution:** Decoupled business logic into standalone, reusable modular components (`PostActions`, `FollowButton`, `CommentList`), turning complex state operations into clean callback functions passed down through props.
+
+---
+
+### 💡 Key Takeaways & Future Enhancements
+
+* **Database Performance:** Implemented compound unique indexes (`@@unique([senderId, receiverId])`) to prevent duplicate database entries and ensure rapid relational lookups at scale.
+* **Next Steps:** Implementing full cascading delete constraints at the database schema level and expanding real-time notification alerts via Socket.io rooms.
+
