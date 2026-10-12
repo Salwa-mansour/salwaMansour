@@ -16,7 +16,7 @@ import   InteractiveCard  from '../components/InteractiveCard.astro';
         <div class="projects-grid">
             {allProjects.map((project) => (
               
-                <InteractiveCard id={project.id} title={project.data.title} summary={project.data.summary} url={project.data.url}  />
+                <InteractiveCard id={project.id} title={project.data.title} summary={project.data.summary} url={project.data.url} gitHubUrl={project.data.gitHubUrl} teckStack={project.data.techStack} />
             ))}
         </div>
 </section>

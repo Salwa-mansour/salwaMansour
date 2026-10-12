@@ -1,0 +1,27 @@
+---
+interface Props {
+  techIcon: string;
+}
+
+const { techIcon } = Astro.props;
+---
+
+<div class="tech-icon">
+  <object type="image/svg+xml" data={`./images/${techIcon}.svg`}>
+    <!-- Fallback content if the browser doesn't support SVG/object -->
+    {techIcon}
+  </object>
+</div>
+
+<style>
+    .tech-icon{
+        width: 20px;
+        height: 20px;
+
+    }
+    .tech-icon object{
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+</style>

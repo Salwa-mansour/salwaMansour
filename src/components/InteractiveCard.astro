@@ -1,16 +1,22 @@
 ---
+import Icon from '../components/Icon.astro';
+
 interface Props {
-  id: string; // <-- Make sure id is declared here!
+  id: string; 
   title?: string;
   summary?: string;
+  teckStack: string[]; // 👈 Fixed array syntax
   url?: string;
+  gitHubUrl?: string;
 }
 
 const {
-  id,         // <-- Destructure id here
+  id,         
   title = "lorem title",
   summary = "lorem disc lorem desc",
-  url = '#'
+  teckStack, // 👈 Added missing comma here
+  url = '#',
+  gitHubUrl = '#'
 } = Astro.props;
 ---
 
@@ -32,10 +38,22 @@ const {
     <div class="card-shadow-layer"></div>
 
     <h3 class="card-title">{title}</h3>
-   
+    
+    <ul class="tech-stack-list">
+      {
+        teckStack.map((tech) => (
+          <Icon techIcon={tech} />
+        ))
+      }
+    </ul>
+
     {summary && <p class="card-desc">{summary}</p>}
+    <a href={gitHubUrl}>
+        <Icon techIcon="GitHub"/>
+        <span>view in github</span>
+    </a>
     <div class="card-glow"></div>
-    <a href={`/projects/${id}`} class="title-link"></a>
+    <!-- <a href={`/projects/${id}`} class="title-link"></a> -->
   </div>
 </article>
 
@@ -70,6 +88,7 @@ const {
 
       const mouseMoveHandler = (e: MouseEvent) => {
         const rect = card.getBoundingClientRect();
+        // 👈 Fixed template literals for dynamic mouse position
         card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
         card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
       };
@@ -174,12 +193,12 @@ const {
     will-change: opacity;
   }
 
-  .title-link {
+  /* .title-link {
     position: absolute;
     inset: 0;
     border-radius: inherit;  
     z-index: 3;
-  }
+  } */
 
   /* --- TYPOGRAPHY & LINKS --- */
   .card-title {
@@ -202,6 +221,16 @@ const {
     color: #cbd5e1;
     margin-top: 0.75rem;
     line-height: 1.5;
+    position: relative;
+    z-index: 2;
+  }
+
+  .tech-stack-list {
+    display: flex;
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0.75rem 0 0 0;
     position: relative;
     z-index: 2;
   }
