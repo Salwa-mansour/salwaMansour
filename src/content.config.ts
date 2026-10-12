@@ -8,6 +8,7 @@ const projectsCollection = defineCollection({
         summary: z.string().max(200), // <-- Short description for your homepage list
         date: z.string(),
         image: image().optional(),    // Optimized cover image
+        url: z.string().url().optional(),
     }),
 });
 

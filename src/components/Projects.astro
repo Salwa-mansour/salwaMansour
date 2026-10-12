@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 // Fetch all project MDX files
 const allProjects = await getCollection('projects');
-
+import   InteractiveCard  from '../components/InteractiveCard.astro';
 ---
 
   <section id="works" class="projcets">
@@ -15,67 +15,12 @@ const allProjects = await getCollection('projects');
        
         <div class="projects-grid">
             {allProjects.map((project) => (
-                <article class="project-card">
-                    <div class="card-contents">
-                        {project.data.image && (
-                        <figure class="card-img">
-                            <Image 
-                            src={project.data.image} 
-                            alt={project.data.title} 
-                            width={400} 
-                            height={225} 
-                            />
-                        </figure> 
-                )}
-                    <div class="card-data">
-                        <h3>{project.data.title}</h3>
-                       
-                    </div>
-                   
-                    {/* Route to the dynamic slug page */}
-                    <a href={`/projects/${project.id}`} class="project-link" title="View Project"> </a>
-                   
-                    </div>
-                </article>
+              
+                <InteractiveCard id={project.id} title={project.data.title} summary={project.data.summary} url={project.data.url}  />
             ))}
         </div>
 </section>
-<script>
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger);
-
-document.addEventListener("DOMContentLoaded", () => {
-    const cards = gsap.utils.toArray('.project-card');
-    
-    cards.forEach((card) => {
-        const contents = card.querySelector('.card-contents');
-
-        // 1. Set initial states
-        gsap.set(card, { rotate: -10, transformOrigin: "center center" });
-        gsap.set(contents, { rotate: 10, scale: 1.2, transformOrigin: "center center" });
-
-        // 2. Create an independent timeline for each card tied to its own position
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: card,          // <-- The individual card triggers it
-                start: "top 85%",       // When the top of the card hits 85% down the viewport
-                end: "top 30%",         // When the top of the card hits 30% up the viewport
-                scrub: 1,               // Smooth scrub effect tied to scroll
-                //markers: true,          // Visible markers pointing right at the specific card
-            }
-        });
-
-        // 3. Add the animations to the card's timeline
-        tl.to(card, { rotate: 0, ease: "power2.out" })
-          .to(contents,
-           { rotate: 0,
-             scale: 1, 
-            ease: "power2.out" }, 0);
-    });
-});
-</script>
 <style>
     .projects-grid{
         display: flex;
@@ -86,44 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
         justify-content: center;
        
     }
-    .card-contents{
-        /* transform: rotate(10deg) scale(1.2); */
-        position: absolute;
-        inset: 0;
-    }
-    .project-card{
-         /* transform: rotate(-10deg); */
-        overflow: hidden;
-        border-radius: 24px;
-        position: relative;
-        width:20rem;
-        aspect-ratio: 3/2;
-    }
-    .card-img{
-        position: absolute;
-        inset: 0;
-    }
-    .card-img img{
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-    .card-data{
-        position: absolute;
-        top: 50%;
-        transform: translate(0, -50%);
-        width: 100%;
-        padding-inline: 1rem;
-        text-align: center;
-    }
-    .card-data h3{
-        font-size: 1rem;
-        font-weight: 300;
-    }
-    .project-link{
-        position: absolute;
-        inset: 0;
-        z-index: 10;
+  
       
-    }
+   
 </style>
