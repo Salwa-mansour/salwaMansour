@@ -33,19 +33,19 @@ const {
   </a>
 
   <!-- Top Front Card -->
-  <div class="card-content">
+  <div class="card-content" aria-label={title}>
     <!-- High-Performance Static Shadow Layer (Faded via GSAP Opacity) -->
     <div class="card-shadow-layer"></div>
-
+      <ul class="tech-stack-list" aria-label="tech stack list">
+          {
+            teckStack.map((tech) => (
+              <Icon techIcon={tech} />
+            ))
+          }
+        </ul>
     <h3 class="card-title">{title}</h3>
     
-    <ul class="tech-stack-list">
-      {
-        teckStack.map((tech) => (
-          <Icon techIcon={tech} />
-        ))
-      }
-    </ul>
+   
 
     {summary && <p class="card-desc">{summary}</p>}
     <a href={gitHubUrl} class="github-link">
@@ -203,11 +203,11 @@ const {
 
   /* --- TYPOGRAPHY & LINKS --- */
   .card-title {
-    font-size: 1.6rem;
+    
     font-weight: 700;
     letter-spacing: -0.02em;
     color: #ffffff;
-    line-height: 1.3;
+    /* line-height: 1.3; */
     margin: 0;
     position: relative;
     z-index: 2;
@@ -226,7 +226,7 @@ const {
   .card-desc {
     font-size: 0.95rem;
     color: #cbd5e1;
-    margin-top: 0.75rem;
+   
     line-height: 1.5;
     position: relative;
     z-index: 2;
@@ -237,7 +237,7 @@ const {
     gap: 0.5rem;
     list-style: none;
     padding: 0;
-    margin: 0.75rem 0 0 0;
+    margin-bottom: 0.75rem;
     position: relative;
     z-index: 2;
   }
@@ -263,4 +263,9 @@ const {
   .interactive-card:hover .card-glow {
     opacity: 1;
   }
+     @media (max-width:770px) {
+      .card-content{
+        padding: 1rem;
+      }
+     }
 </style>
