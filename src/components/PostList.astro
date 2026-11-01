@@ -1,0 +1,23 @@
+---
+
+import { sanityClient } from "../lib/sanity";
+
+const query = `*[_type == "post"] | order(publishedAt desc) {
+  title,
+  "slug": slug.current,
+  publishedAt,
+  excerpt
+}`;
+
+const posts = await sanityClient.fetch(query);
+---
+
+<ul>
+  {posts.map((post :any) => (
+    <li>
+      <h2>{post.title}</h2>
+      <p>{post.excerpt}</p>
+      <a href={`blog/${post.slug}`}>read more</a>
+    </li>
+  ))}
+</ul> 

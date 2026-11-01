@@ -1,0 +1,14 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import PostList from "../../components/PostList.astro"
+
+
+---
+<Layout title="blog posts" description="Lorem  sit amet">
+
+		<main>
+			<PostList/>
+		</main>
+</Layout>

@@ -1,0 +1,52 @@
+---
+import  Layout  from '../../layouts/Layout.astro';
+import { sanityClient } from '../../lib/sanity';
+import { urlFor } from '../../lib/imageBuilder';
+import { PortableText } from '@portabletext/astro'; // 1. Import PortableText renderer
+
+export async function getStaticPaths() {
+  const posts = await sanityClient.fetch(`*[_type == "post" && defined(slug.current)] {
+    "slug": slug.current
+  }`);
+
+  return posts.map((post: any) => ({
+    params: { slug: post.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+
+const post = await sanityClient.fetch(
+  `*[_type == "post" && slug.current == $slug][0] {
+    title,
+    "slug": slug.current,
+    publishedAt,
+    excerpt,
+    mainImage,
+    body  // 2. Fetch the body field here
+  }`,
+  { slug }
+);
+
+if (!post) {
+  return Astro.redirect('/404');
+}
+---
+
+<Layout title={post.title} description={post.excerpt} image={post.mainImage}>
+    <h1>{post.title}</h1>
+    <p>Published: {new Date(post.publishedAt).toLocaleDateString()}</p>
+      
+    {post.mainImage && (
+      <img 
+        src={urlFor(post.mainImage).width(800).url()} 
+        alt={post.title} 
+        loading="lazy"
+      />
+    )}
+
+    <p><em>{post.excerpt}</em></p>
+
+    {/* 3. Render the Sanity Block Content */}
+    <PortableText value={post.body} />
+</Layout>
