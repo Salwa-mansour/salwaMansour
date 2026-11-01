@@ -1,5 +1,4 @@
 ---
-
 import { sanityClient } from "../lib/sanity";
 
 const query = `*[_type == "post"] | order(publishedAt desc) {
@@ -12,12 +11,130 @@ const query = `*[_type == "post"] | order(publishedAt desc) {
 const posts = await sanityClient.fetch(query);
 ---
 
-<ul>
-  {posts.map((post :any) => (
-    <li>
-      <h2>{post.title}</h2>
-      <p>{post.excerpt}</p>
-      <a href={`blog/${post.slug}`}>read more</a>
+<ul class="blog-posts">
+  {posts.map((post: any) => (
+    <li class="post-item">
+      <article>
+          <div class="post-content">
+            <h2>{post.title}</h2>
+            <p>{post.excerpt}</p>
+          </div>
+          <div class="post-footer">
+            <span class="read-more">Read post <span class="arrow">&rarr;</span></span>
+          </div>
+          <a href={`blog/${post.slug}`} class="post-link" title={post.title}></a>
+      </article>
     </li>
   ))}
 </ul> 
+
+<style>
+.blog-posts {
+    list-style: none;
+    padding: 0;
+    max-width: 650px;
+    margin: 2.5rem auto;
+}
+
+/* Default state: Popped up & glowing with a bright gradient */
+.blog-posts li {
+    position: relative;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    border-radius: 12px;
+    /* Keeps your vibrant background constant */
+    background: linear-gradient(135deg, rgba(40, 50, 75, 0.95), rgba(22, 30, 48, 0.95) 50%, rgba(15, 22, 36, 0.98));
+    transform: translateY(0px);
+    box-shadow: 0 10px 25px -5px rgba(56, 189, 248, 0.15), 0 8px 20px -6px rgba(0, 0, 0, 0.6);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden; /* Ensures the overlay stays inside the rounded borders */
+}
+
+/* Transparent black overlay layer */
+.blog-posts li::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.7); /* Transparent black overlay */
+    opacity: .2; 
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    border-radius: inherit;
+    z-index: 1;
+}
+
+.post-content, .post-footer, .post-link {
+    position: relative;
+    z-index: 2; /* Keeps text and link clickable above the overlay */
+}
+
+.post-content h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #38bdf8;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+    transition: color 0.3s ease;
+}
+
+.arrow {
+    display: inline-block;
+    transform: translateX(0px);
+    transition: transform 0.3s ease;
+}
+
+/* Hover state: Lifts slightly and fades in the transparent black overlay */
+.blog-posts li:hover {
+    transform: translateY(-2px);
+    /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); */
+}
+
+.blog-posts li:hover::before {
+    opacity: .5; /* Fades the transparent black overlay to fully active on hover */
+}
+
+.blog-posts li:hover h2 {
+    color: #e2e8f0;
+}
+
+.blog-posts li:hover .arrow {
+    transform: translateX(2px);
+}
+
+.post-item article {
+    padding: 1.75rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.post-content p {
+    color: #94a3b8;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.post-footer {
+    display: flex;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+
+.read-more {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #cbd5e1;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.post-link {
+    position: absolute;
+    inset: 0;
+    cursor: pointer;
+    border-radius: inherit;
+    z-index: 3;
+}
+</style>
