@@ -29,11 +29,7 @@
 
 
     <p class="site-description">
-        A front end  developer based in Yemen. As a creative problem solver,
-            I will help you convert your idea into a live website representing your brand in 
-            the internet world.
-        I love working with animation and creative ideas and my workflow is focused on 
-        performance acessiablity and responsive design.</p>
+        A front-end developer based in Yemen. As a creative problem solver, I will help you convert your idea into a live website representing your brand in the digital world. I love working with animation and creative ideas, and my workflow is focused on performance, accessibility, and responsive design.</p>
     </div><!-- .site-branding -->
 
 <div class="wellcom">
@@ -42,7 +38,7 @@
     </figure>
    <figure class="hand-box your-hand">
       <figcaption class="start-shaking">click the hand
-          <span class="puppy-arrow">↓</span>
+          <span class="puppy-arrow">&#8595;</span>
       </figcaption>
        
       <img src="./images/yourhand.png" alt="your hand" >
@@ -154,7 +150,7 @@ mm.add({
 
                 if (meetText) {
                     if (clickCount === 1) {
-                        meetText.textContent = "nice to meet you";
+                        meetText.textContent = "nice to meet you ^^";
                     } else if (clickCount === 2) {
                         meetText.textContent = "what's up friend (o^▽^o)";
                     } else if (clickCount === 3) {
@@ -235,6 +231,7 @@ mm.add({
         transform:rotate(10deg) translateY(-50%);
     }
     .start-shaking{
+        text-transform: capitalize;
         position: absolute;
         top: -50%;
         left: -50%;
@@ -269,6 +266,12 @@ mm.add({
         gap: 1rem;
         align-items: center;
         
+    }
+    .meet-txt{
+        text-transform: capitalize;
+    }
+    .hand-img{
+        position: relative;
     }
     .hand-img,
     .meet-txt{
